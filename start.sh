@@ -8,9 +8,9 @@ fi
 
 LoadAdmin() {
   if [ -f /opt/tak/CoreConfig.xml ]; then
-	echo "FOUND THE CONFIG ... WTF? "
+	echo "/opt/tak/CoreConfig.xml found"
   else
-	echo " NO CONFIG" 
+	echo -e "No config found at /opt/tak/CoreConfig.xml\nCheck your docker-compose.yaml and ensure the file exists in the current directory"
 	exit
   fi
   echo "Loading Admin cert"
@@ -21,9 +21,9 @@ LoadAdmin() {
     echo "Exiting to force container restart"
     exit
   else 
-    echo " I guess it worked ... "
+    echo " Admin cert loaded successfully"
     # We'll look for this on startup and skip the AdminLoad if it exists.
-    touch /tmp/admin.loaded
+    touch /home/tak/admin.loaded
     echo " Exiting to force container resart on new cert "
     exit
   fi
@@ -45,10 +45,11 @@ fi
 # Run TAK server setup script
 echo "Running TAK server setup script..."
 /opt/tak/configureInDocker.sh init &>> /opt/tak/logs/takserver.log &
-echo "Waiting for $(cat /tmp/wait) seconds"
-sleep $(cat /tmp/wait)
 
-if ! [ -f /tmp/admin.loaded ]; then
+# Only load the admin cert if needed.
+if ! [ -f /home/tak/admin.loaded ]; then
+	echo "Waiting for $(cat /tmp/wait) seconds"
+	sleep $(cat /tmp/wait)
 	LoadAdmin 
 fi
 
