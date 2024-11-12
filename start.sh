@@ -1,4 +1,6 @@
+
 #!/bin/sh
+# set and/or update the wait time.
 if ! [ -f /tmp/wait ]; then
 	echo "185" > /tmp/wait
 else
@@ -49,6 +51,7 @@ echo "Running TAK server setup script..."
 # Only load the admin cert if needed.
 if ! [ -f /home/tak/admin.loaded ]; then
 	echo "Waiting for $(cat /tmp/wait) seconds"
+	date
 	sleep $(cat /tmp/wait)
 	LoadAdmin 
 fi
