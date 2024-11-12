@@ -25,10 +25,10 @@ services:
     restart: unless-stopped
     environment:
       - envpass="TAKTAK-DB-Pass"
-      - STATE="DC"
-      - CITY="Washington"
-      - ORGANIZATION="Army"
-      - ORGANIZATIONAL_UNIT="USAREUR-AF"
+      - STATE="NSS"
+      - CITY="NSC"
+      - ORGANIZATION="NSO"
+      - ORGANIZATIONAL_UNIT="NSOU"
     ports:
       - "8080:8080"
       - "8443:8443"
