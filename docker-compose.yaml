@@ -18,6 +18,8 @@ services:
     volumes:
       - tak-db:/var/lib/postgresql/data
       - ./CoreConfig.xml:/opt/tak/CoreConfig.xml  # Bind mount the modified CoreConfig.xml
+      - ./start-db.sh:/opt/tak/start.sh
+    entrypoint: ["/bin/sh", "/opt/tak/start.sh"]
 
   takserver:
     image: registry1.dso.mil/ironbank/tpc/tak/tak-server:5.2
