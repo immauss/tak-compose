@@ -38,7 +38,7 @@ echo "Starting TAK server initialization..."
 # Check if certs already exist before generating
 if [ ! -f /opt/tak/certs/files/ca.pem ]; then
   echo "Certificates not found. Generating new certificates..."
-  cd /opt/tak/certs && export CA_NAME='TAKServer' && ./generateClusterCerts.sh
+  cd /opt/tak/certs && export CA_NAME='mpetak.2cr.army.mil' && ./generateClusterCerts.sh
   echo "Certificates generated successfully."
 else
   echo "Certificates already exist. Skipping generation."
@@ -49,7 +49,9 @@ echo "Running TAK server setup script..."
 /opt/tak/configureInDocker.sh init &>> /opt/tak/logs/takserver.log &
 
 # Only load the admin cert if needed.
-if ! [ -f /home/tak/admin.loaded ]; then
+# This should be stored on  a persistent location so we don't do this on a 
+# container rebuild with existing data.
+if ! [ -f /opt/tak/admin.loaded ]; then
 	echo "Waiting for $(cat /tmp/wait) seconds"
 	date
 	sleep $(cat /tmp/wait)

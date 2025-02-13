@@ -23,7 +23,8 @@ while true; do
 		cd /opt/tak/db-utils
 		./configure.sh
 		echo "Setting martiuser password"
-		psql -U postgres -c "ALTER ROLE martiuser PASSWORD 'TAKTAK-DB-Pass' ;"
+		PASSWORD=$(echo $(grep -m 1 "<connection" /opt/tak/CoreConfig.xml)  | sed 's/.*password="//; s/".*//')
+		psql -U postgres -c "ALTER ROLE martiuser PASSWORD '$PASSWORD' ;"
 
 		java -jar SchemaManager.jar upgrade
 		tail -f /dev/null

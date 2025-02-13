@@ -4,13 +4,11 @@ networks:
 
 services:
   takserver-db:
-    image: registry1.dso.mil/ironbank/tpc/tak/tak-server-db:5.2
+    image: mce/tak-db:25.02.01
     container_name: tak-db
     restart: unless-stopped
     environment:
       - envpass="TAKTAK-DB-Pass"
-    ports:
-      - "5432:5432"
     networks:
       takserver-net-hardened:
         aliases:
@@ -18,11 +16,9 @@ services:
     volumes:
       - tak-db:/var/lib/postgresql/data
       - ./CoreConfig.xml:/opt/tak/CoreConfig.xml  # Bind mount the modified CoreConfig.xml
-      - ./start-db.sh:/opt/tak/start.sh
-    entrypoint: ["/bin/sh", "/opt/tak/start.sh"]
 
   takserver:
-    image: registry1.dso.mil/ironbank/tpc/tak/tak-server:5.2
+    image: mce/tak-tak:25.02.01
     container_name: tak
     restart: unless-stopped
     environment:
@@ -49,8 +45,6 @@ services:
       - takserver-data:/opt/tak
       - ./CoreConfig.xml:/opt/tak/CoreConfig.xml  # Bind mount the modified CoreConfig.xml
       - takserver-certs:/opt/tak/certs  # volume  mount for certs persistence
-      - ./start.sh:/opt/tak/start.sh  # Bind mount the startup script
-    entrypoint: ["/bin/sh", "/opt/tak/start.sh"]
 
 volumes:
   tak-db:
