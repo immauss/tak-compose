@@ -1,0 +1,6 @@
+FROM registry1.dso.mil/ironbank/tpc/tak/tak-server-db:latest
+COPY compose/start-db.sh /opt/tak/start.sh
+LABEL maintainer="george.e.knauss.ctr@army.mil" \
+      version="25.02.01" \
+      description="TAK DB from Iron Bank with custom start script"
+ENTRYPOINT ["/opt/tak/start.sh"]
