@@ -25,6 +25,7 @@ LoadAdmin() {
   else 
     echo " Admin cert loaded successfully"
     # We'll look for this on startup and skip the AdminLoad if it exists.
+    echo "Marking admin as loaded"
     touch /home/tak/admin.loaded
     echo " Exiting to force container resart on new cert "
     exit
