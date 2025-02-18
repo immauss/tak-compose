@@ -1,6 +1,7 @@
 FROM registry1.dso.mil/ironbank/tpc/tak/tak-server:latest
-COPY start.sh /opt/tak/start.sh
+RUN mkdir /opt/scripts
+COPY ./start.sh /scripts/start.sh
 LABEL maintainer="george.e.knauss.ctr@army.mil" \
       version="25.02.01" \
       description="TAK server from Iron Bank with custom start script"
-ENTRYPOINT ["/bin/bash","/opt/tak/start.sh"]
+ENTRYPOINT ["/bin/bash","/opt/scripts/start.sh"]
